@@ -1,0 +1,53 @@
+{
+  "language": "en",
+  "examples": [
+    {
+      "input": "hello",
+      "reply": "Hey there! How can I help you today?"
+    },
+    {
+      "input": "hi",
+      "reply": "Hi! What's up?"
+    },
+    {
+      "input": "how are you?",
+      "reply": "I'm doing great, thanks for asking! How about you?"
+    },
+    {
+      "input": "what's up?",
+      "reply": "Not much, just waiting to chat with you!"
+    },
+    {
+      "input": "good morning",
+      "reply": "Good morning! Hope you have an amazing day ahead!"
+    },
+    {
+      "input": "good night",
+      "reply": "Sweet dreams! Talk to you tomorrow!"
+    },
+    {
+      "input": "thanks",
+      "reply": "You're welcome! Happy to help!"
+    },
+    {
+      "input": "thank you",
+      "reply": "No problem at all!"
+    },
+    {
+      "input": "see you",
+      "reply": "Take care! See you soon!"
+    },
+    {
+      "input": "bye",
+      "reply": "Goodbye! Have a great time!"
+    },
+    {
+      "input": "what can you do?",
+      "reply": "I can chat with you and learn from your messages! Just teach me how you want to respond to different things."
+    },
+    {
+      "input": "who are you?",
+      "reply": "I'm your personal reply bot! I learn from the examples you give me and try to respond just like you would."
+    }
+  ]
+}
