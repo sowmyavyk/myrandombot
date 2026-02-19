@@ -1,0 +1,19 @@
+{
+  "total_messages": 8,
+  "conversations": 0,
+  "messages_by_user": {
+    "default": 5,
+    "cli_user": 3
+  },
+  "messages_by_mood": {
+    "neutral": 8
+  },
+  "messages_by_language": {
+    "en": 8
+  },
+  "daily_stats": {
+    "2026-02-20": 8
+  },
+  "corrections": [],
+  "feedback": []
+}

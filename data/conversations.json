@@ -1,0 +1,118 @@
+{
+  "default": [
+    {
+      "role": "user",
+      "content": "hey there!",
+      "timestamp": "2026-02-20T00:25:12.260062",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "Hey there too! Hope you're having a good day. What’s on your mind or what can I assist with today?",
+      "timestamp": "2026-02-20T00:25:12.268625",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "I am so happy today!",
+      "timestamp": "2026-02-20T00:25:20.853912",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "Wow, that's wonderful news! I'm really glad you're feeling joyful. Is there's something specific that made your day extra special? I'm here if you'd like to share more or need any assistance with anything else for now – whether it's a simple task you want help with or just someone who cares and listens when the mood strikes!",
+      "timestamp": "2026-02-20T00:25:20.854900",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "I failed my exam",
+      "timestamp": "2026-02-20T00:25:45.840198",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm truly sorry that you're feeling this way. Remember, one setback doesn't define your journey or capabilities – it’s just a part of the learning process and can be an opportunity for growth.\n\nHow about we take things step by step? Reflecting on what happened might give us insights into areas where you could improve next time around. Would like to brainstorm some strategies together that may help with preparing better in future exams?\n\nAnd remember, your worth isn't determined solely through academic success – it's also reflected in how resilient and strong you've been handling this challenge so far! If there’s anything specific you'd need support or advice on right now for moving forward positively from here, I'm all ears. Let's turn the page together to a new chapter that holds even more promise than before!",
+      "timestamp": "2026-02-20T00:25:45.846645",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "I failed my exam",
+      "timestamp": "2026-02-20T00:26:02.704429",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "Ah, the classic tale of 'exam heartbreak.' It's like life's own little plot twist straight out of an Oscar-winning drama. But hey, don't let this chapter close too quickly; it's just a cliffhanger in your academic saga.\n\nRemember that learning doesn't end at exams – think more as stepping stones across knowledge's vast river instead! Why not use the experience to fuel new strategies and insights for future successes? And keep reminding yourself - true success isn't measured by one test, but rather how you bounce back stronger after falling. I believe in your ability to rise from this setback like a phoenix... well, even better because we're talking about exams here!\n\nSo what's next on our 'plotline' of personal growth and triumph over trials? Let's turn the page together!",
+      "timestamp": "2026-02-20T00:26:02.710682",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "I failed my exam",
+      "timestamp": "2026-02-20T00:26:20.965422",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm sorry you're feeling this way. While it's disappointing that you've faced an unexpected outcome on your exams, remember it doesn't define the entirety of who or what you are – especially in academic pursuits.\n\nIt may be helpful for us now is not just looking at what's been achieved but exploring ways to overcome challenges and improve moving forward together! How about we brainstorm some new study techniques next time? Or perhaps discuss a supportive plan that can help alleviate any anxiety related to this experience. We could also look into additional resources or tutoring if you think it would benefit your preparation.\n\nYou've got the potential in there, I know – let's identify those areas where you're ready for growth and work on them step by step! Remember every challenge is an opportunity waiting just beneath its surface; we can uncover a path to success together.",
+      "timestamp": "2026-02-20T00:26:20.967903",
+      "mood": "neutral",
+      "language": "en"
+    }
+  ],
+  "cli_user": [
+    {
+      "role": "user",
+      "content": "hi",
+      "timestamp": "2026-02-20T00:30:34.856184",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi, how's it going? Need any assistance with anything specific or just looking for some friendly conversation?",
+      "timestamp": "2026-02-20T00:30:34.858285",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "Hello",
+      "timestamp": "2026-02-20T00:30:43.985682",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi, how are you? Do you need any assistance or just wanted some company for the day?",
+      "timestamp": "2026-02-20T00:30:43.992058",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "user",
+      "content": "9",
+      "timestamp": "2026-02-20T00:31:06.755655",
+      "mood": "neutral",
+      "language": "en"
+    },
+    {
+      "role": "assistant",
+      "content": "09? Did someone say 'nine'? If you're referring back or something related, just let me know how I can assist you further. Whether it's a question about time ('what's the current hour and minute'), helping with directions based on distance (e.g., if you've traveled for nine miles), clarifications in your message (\"Did you mean 9 AM instead of PM?\" - though that's not exactly what you're asking but I'm trying to help!), or anything else, feel free to share more details.",
+      "timestamp": "2026-02-20T00:31:06.757325",
+      "mood": "neutral",
+      "language": "en"
+    }
+  ]
+}
