@@ -25,6 +25,11 @@ webhook_sender = WebhookSender()
 pending_searches = {}
 
 
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "femicase"}
+
+
 class MessageRequest(BaseModel):
     message: str
     user_id: Optional[str] = "default"

@@ -2,9 +2,11 @@ from typing import Dict, Any, List, Optional, Callable
 from dataclasses import dataclass
 import re
 import os
+from urllib.parse import urlparse
 
 from src.tools.filesystem import FileSystemTool, TerminalTool, CodeAnalyzer
 from src.tools.filesystem import get_desktop_path, get_documents_path, get_downloads_path
+from src.tools.scraper import WebScraper, LocalFileReader
 
 
 @dataclass
@@ -19,6 +21,8 @@ class ToolManager:
         self.file_system = FileSystemTool(base_path)
         self.terminal = TerminalTool()
         self.code_analyzer = CodeAnalyzer()
+        self.web_scraper = WebScraper()
+        self.local_reader = LocalFileReader()
         
         self.folder_map = {
             "downloads": get_downloads_path(),
@@ -92,6 +96,17 @@ class ToolManager:
             if command.startswith("!"):
                 command = command[1:]
             return (self.run_command, (command,))
+        
+        # URL detection - check if query contains a URL
+        url_pattern = r'https?://[^\s]+'
+        url_match = re.search(url_pattern, query)
+        if url_match:
+            url = url_match.group(0)
+            if "summarize" in q or "summary" in q:
+                return (self.scrape_url_summary, (url,))
+            if "extract" in q or "text" in q:
+                return (self.scrape_url_text, (url,))
+            return (self.scrape_url, (url,))
         
         return None
 
@@ -244,6 +259,43 @@ class ToolManager:
             return ToolResult(success=False, result=None, error=result["error"])
         return ToolResult(success=True, result=result)
 
+    def scrape_url(self, url: str) -> ToolResult:
+        result = self.web_scraper.scrape_url(url)
+        if "error" in result:
+            return ToolResult(success=False, result=None, error=result["error"])
+        return ToolResult(success=True, result=result)
+
+    def scrape_url_summary(self, url: str) -> ToolResult:
+        result = self.web_scraper.scrape_url(url, max_length=2000)
+        if "error" in result:
+            return ToolResult(success=False, result=None, error=result["error"])
+        summary = {
+            "url": result["url"],
+            "title": result.get("title", "No title"),
+            "content": result["content"],
+            "links_count": len(result.get("links", [])),
+            "images_count": len(result.get("images", []))
+        }
+        return ToolResult(success=True, result=summary)
+
+    def scrape_url_text(self, url: str) -> ToolResult:
+        result = self.web_scraper.extract_text_only(url)
+        if result.startswith("❌"):
+            return ToolResult(success=False, result=None, error=result)
+        return ToolResult(success=True, result={"content": result})
+
+    def read_local_file(self, path: str, lines: int = 100) -> ToolResult:
+        result = self.local_reader.read_file(path, max_lines=lines)
+        if "error" in result:
+            return ToolResult(success=False, result=None, error=result["error"])
+        return ToolResult(success=True, result=result)
+
+    def get_directory_tree(self, path: str, depth: int = 2) -> ToolResult:
+        result = self.local_reader.get_file_tree(path, max_depth=depth)
+        if "error" in result:
+            return ToolResult(success=False, result=None, error=result["error"])
+        return ToolResult(success=True, result=result)
+
     @property
     def tools(self):
         return {
@@ -264,6 +316,9 @@ class ToolManager:
             "analyze": self.analyze_code,
             "run": self.run_command,
             "shell": self.run_command,
+            "scrape": self.scrape_url,
+            "readfile": self.read_local_file,
+            "tree": self.get_directory_tree,
         }
 
     def format_result(self, result: ToolResult) -> str:
@@ -311,6 +366,32 @@ class ToolManager:
                 output += f"\nClasses: {', '.join(data['classes'][:5])}"
             return output
         
+        if "url" in data and "title" in data:
+            output = f"🌐 {data.get('title', 'No title')}\n"
+            output += f"🔗 {data['url']}\n\n"
+            if "content" in data:
+                output += f"📝 {data['content'][:1000]}"
+                if len(data.get("content", "")) > 1000:
+                    output += "..."
+            if "links_count" in data:
+                output += f"\n🔗 {data['links_count']} links found"
+            if "images_count" in data:
+                output += f"\n🖼️ {data['images_count']} images found"
+            return output
+        
+        if "content" in data and "file" in data:
+            output = f"📄 {data['file']}\n"
+            output += f"Lines: {data.get('lines', 'Unknown')}"
+            if data.get("truncated"):
+                output += " (truncated)"
+            output += f"\n\n{data['content'][:2000]}"
+            return output
+        
+        if "tree" in data and "directory" in data:
+            output = f"📁 Tree: {data['directory']}\n\n"
+            output += self._format_tree(data['tree'], 0)
+            return output
+        
         return str(data)
     
     def _format_size(self, size: int) -> str:
@@ -321,3 +402,13 @@ class ToolManager:
                 return f"({size:.1f} {unit})"
             size /= 1024.0
         return f"({size:.1f} TB)"
+    
+    def _format_tree(self, items, depth: int = 0) -> str:
+        output = ""
+        indent = "  " * depth
+        for item in items[:20]:
+            icon = "📂" if item["type"] == "dir" else "📄"
+            output += f"{indent}{icon} {item['name']}\n"
+            if "children" in item:
+                output += self._format_tree(item["children"], depth + 1)
+        return output
