@@ -4,6 +4,7 @@ from pathlib import Path
 # ==================== LLM Configuration ====================
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
 LLM_MODEL = os.getenv("LLM_MODEL", "phi4-mini")

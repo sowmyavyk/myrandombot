@@ -8,6 +8,9 @@ import config
 if config.LLM_PROVIDER == "ollama":
     from langchain_community.chat_models import ChatOllama
     from langchain_ollama import OllamaEmbeddings
+elif config.LLM_PROVIDER == "groq":
+    from langchain_groq import ChatGroq
+    from langchain_openai import OpenAIEmbeddings
 else:
     from langchain_openai import OpenAIEmbeddings
     from langchain_openai import ChatOpenAI
@@ -31,9 +34,10 @@ class VectorStoreManager:
                 base_url=config.OLLAMA_BASE_URL
             )
         else:
+            # For Groq/OpenAI, use OpenAI embeddings (free tier)
             self.embeddings = OpenAIEmbeddings(
-                model=config.EMBEDDING_MODEL,
-                api_key=config.OPENAI_API_KEY
+                model="text-embedding-3-small",
+                api_key=config.OPENAI_API_KEY or config.GROQ_API_KEY
             )
         self.vector_store = None
         self._init_vector_store()
@@ -107,6 +111,12 @@ class ReplyGenerator:
             self.llm = ChatOllama(
                 model=config.LLM_MODEL,
                 base_url=config.OLLAMA_BASE_URL,
+                temperature=0.7
+            )
+        elif config.LLM_PROVIDER == "groq":
+            self.llm = ChatGroq(
+                model=config.LLM_MODEL,
+                api_key=config.GROQ_API_KEY,
                 temperature=0.7
             )
         else:
