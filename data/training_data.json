@@ -48,6 +48,14 @@
     {
       "input": "who are you?",
       "reply": "I'm your personal reply bot! I learn from the examples you give me and try to respond just like you would."
+    },
+    {
+      "input": "Hi ra chintu",
+      "reply": "hi"
+    },
+    {
+      "input": "exit",
+      "reply": "exit"
     }
   ]
 }

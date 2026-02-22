@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import uvicorn
@@ -7,9 +8,21 @@ import asyncio
 from src.bot import PersonalReplyBot
 from src.integrations.webhooks import WebhookSender
 
-app = FastAPI(title="Personal Reply Bot API", version="2.0")
+app = FastAPI(title="Femicase API", version="2.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 bot = PersonalReplyBot()
 webhook_sender = WebhookSender()
+
+# Store pending searches per user
+pending_searches = {}
 
 
 class MessageRequest(BaseModel):
@@ -38,7 +51,7 @@ class CorrectionRequest(BaseModel):
 async def root():
     return {
         "status": "running",
-        "bot": "Personal Reply Bot v2.0",
+        "bot": "Femicase AI Assistant",
         "endpoints": {
             "/chat": "POST - Send a message",
             "/train": "POST - Add training example",
@@ -53,11 +66,29 @@ async def root():
 
 @app.post("/chat")
 async def chat(request: MessageRequest):
-    result = bot.get_reply(request.message, request.user_id)
+    user_id = request.user_id
+    
+    # Check if user gave permission for full search
+    if user_id in pending_searches and request.message.lower() in ['yes', 'yeah', 'sure', 'do it', 'go ahead', 'please do', 'y']:
+        query = pending_searches.pop(user_id)
+        tool_result = bot.tools.execute_full_search(query)
+        formatted = bot.tools.format_result(tool_result)
+        return {
+            "reply": formatted,
+            "type": "tool",
+            "user_id": user_id
+        }
+    
+    result = bot.get_reply(request.message, user_id)
+    
+    # If needs permission, store the pending search
+    if result.get("type") == "permission" and result.get("pending_action"):
+        pending_searches[user_id] = result["pending_action"]["query"]
+    
     return {
-        "reply": result["reply"],
-        "user_id": request.user_id,
-        "stats": result["stats"]
+        "reply": result.get("reply", result.get("content", "")),
+        "type": result.get("type", "llm"),
+        "user_id": user_id
     }
 
 
@@ -141,13 +172,11 @@ async def discord_webhook(request: Request):
 def run_server(host: str = "0.0.0.0", port: int = 8000):
     print(f"""
 ╔═══════════════════════════════════════════════════════════╗
-║           PERSONAL REPLY BOT - API SERVER                  ║
+║                  FEMICASE - API SERVER                    ║
 ╚═══════════════════════════════════════════════════════════╝
 
 🌐 API:      http://localhost:{port}
 📖 Docs:     http://localhost:{port}/docs
-📡 Webhooks: http://localhost:{port}/telegram/webhook
-              http://localhost:{port}/discord/webhook
 
 Ready to receive messages!
 """)

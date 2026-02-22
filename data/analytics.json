@@ -1,18 +1,24 @@
 {
-  "total_messages": 8,
+  "total_messages": 19,
   "conversations": 0,
   "messages_by_user": {
-    "default": 5,
-    "cli_user": 3
+    "default": 6,
+    "cli_user": 5,
+    "user_6pem3r37u": 1,
+    "test123": 1,
+    "user_itv9bt96d": 2,
+    "user_wcyb8nytt": 2,
+    "user_b2xq8xk53": 2
   },
   "messages_by_mood": {
-    "neutral": 8
+    "neutral": 19
   },
   "messages_by_language": {
-    "en": 8
+    "en": 19
   },
   "daily_stats": {
-    "2026-02-20": 8
+    "2026-02-20": 8,
+    "2026-02-22": 11
   },
   "corrections": [],
   "feedback": []

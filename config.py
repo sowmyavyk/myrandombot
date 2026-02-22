@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+# ==================== LLM Configuration ====================
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
@@ -9,6 +10,7 @@ LLM_MODEL = os.getenv("LLM_MODEL", "phi4-mini")
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
+# ==================== Data Paths ====================
 DATA_DIR = "data"
 TRAINING_DATA_FILE = f"{DATA_DIR}/training_data.json"
 CONVERSATIONS_FILE = f"{DATA_DIR}/conversations.json"
@@ -16,10 +18,39 @@ MEMORY_FILE = f"{DATA_DIR}/long_term_memory.json"
 ANALYTICS_FILE = f"{DATA_DIR}/analytics.json"
 VECTOR_STORE_DIR = f"{DATA_DIR}/vector_store"
 
+# ==================== Bot Settings ====================
 SIMILARITY_THRESHOLD = 0.7
 MAX_RESULTS = 3
 MAX_CONVERSATION_TURNS = 10
 
+# ==================== Security Settings ====================
+RATE_LIMIT_REQUESTS = int(os.getenv("RATE_LIMIT_REQUESTS", "60"))
+RATE_LIMIT_WINDOW = int(os.getenv("RATE_LIMIT_WINDOW", "60"))
+MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", "10000"))
+
+ALLOWED_EXTENSIONS = {
+    ".txt", ".md", ".json", ".yaml", ".yml", ".xml", ".csv",
+    ".py", ".js", ".ts", ".java", ".c", ".cpp", ".h", ".hpp",
+    ".go", ".rs", ".swift", ".kt", ".rb", ".php", ".html",
+    ".css", ".scss", ".sql", ".sh", ".bash", ".zsh",
+    ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+    ".jpg", ".jpeg", ".png", ".gif", ".svg", ".mp3", ".mp4",
+    ".zip", ".tar", ".gz", ".rar", ".env", ".gitignore",
+    "README", "LICENSE", "Makefile", "Dockerfile", ".dockerignore"
+}
+
+BLOCKED_PATHS = {
+    "/System", "/Library/Caches", "/private",
+    "/Applications/.Trashes", "/Users/vyakaranamsowmya/.Trash",
+    "/etc", "/usr/bin", "/usr/sbin", "/bin", "/sbin"
+}
+
+# ==================== Server Settings ====================
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", "8000"))
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+
+# ==================== Language Support ====================
 SUPPORTED_LANGUAGES = {
     "en": {"name": "English", "code": "en"},
     "hi": {"name": "Hindi", "code": "hi"},
@@ -28,6 +59,7 @@ SUPPORTED_LANGUAGES = {
     "ml": {"name": "Malayalam", "code": "ml"}
 }
 
+# ==================== Personalities ====================
 PERSONALITIES = {
     "default": {
         "name": "Your Style",
@@ -56,6 +88,7 @@ PERSONALITIES = {
     }
 }
 
+# ==================== Mood Detection ====================
 MOODS = {
     "happy": ["😊", "😄", "🎉", "awesome", "great", "love"],
     "sad": ["😢", "💔", "upset", "miss", "lonely", "sad"],
@@ -71,6 +104,7 @@ FALLBACK_RESPONSES = [
     "I need more examples to learn from.",
 ]
 
+# ==================== Webhook Integrations ====================
 WEBHOOK_CONFIG = {
     "telegram": {
         "enabled": os.getenv("TELEGRAM_ENABLED", "false"),
